@@ -123,6 +123,9 @@ class _LoginPageState extends State<LoginPage> {
               ),
               SizedBox(height: 10),
               TextButton(
+                style: ButtonStyle(
+                  overlayColor: WidgetStatePropertyAll(Colors.transparent),
+                ),
                 onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => RegisterPage()),
