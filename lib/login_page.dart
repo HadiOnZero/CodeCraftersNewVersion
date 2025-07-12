@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:syborgcate_workshop/constants/assets.dart';
+import 'package:syborgcate_workshop/main.dart';
 import 'package:syborgcate_workshop/register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -27,7 +28,13 @@ class _LoginPageState extends State<LoginPage> {
     } on FirebaseAuthException catch (e) {
       setState(() => errorMessage = e.message ?? 'Login error');
     } finally {
-      setState(() => isLoading = false);
+      setState(() {
+        isLoading = false;
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePages()),
+        );
+      });
     }
   }
 
@@ -110,7 +117,13 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   onPressed: isLoading ? null : signIn,
                   child: isLoading
-                      ? const CircularProgressIndicator()
+                      ? SizedBox(
+                          child: const CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
+                          width: 20,
+                          height: 20,
+                        )
                       : const Text(
                           'Login',
                           style: TextStyle(

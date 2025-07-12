@@ -34,12 +34,24 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Register')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Center(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(height: 90),
+              Image(
+                image: AssetImage('assets/shop.png'),
+                width: 150,
+                height: 150,
+              ),
+              Text(
+                'Welcome to CodeCrafters\nsign up to continue',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 90),
               TextField(
                 controller: emailController,
                 cursorColor: Colors.black,
@@ -95,7 +107,11 @@ class _RegisterPageState extends State<RegisterPage> {
                     backgroundColor: WidgetStatePropertyAll(Colors.black),
                   ),
                   child: isLoading
-                      ? CircularProgressIndicator()
+                      ? SizedBox(
+                          child: CircularProgressIndicator(color: Colors.white),
+                          height: 20,
+                          width: 20,
+                        )
                       : Text(
                           'Register',
                           style: TextStyle(
