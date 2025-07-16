@@ -24,12 +24,14 @@ jobs:
       run: flutter pub get
 
     # ✅ Patch Podfile untuk iOS 13.0 (1x saja)
-    - name: Set iOS Deployment Target to 13.0
+    - name: Ensure Podfile has iOS 13.0
       run: |
-        if grep -q "platform :ios" ios/Podfile; then
-          sed -i '' "s/platform :ios, .*/platform :ios, '13.0'/" ios/Podfile
+        if [ -f ios/Podfile ]; then
+          echo "✅ Podfile ditemukan, patching..."
+          sed -i '' "s/platform :ios, .*/platform :ios, '13.0'/" ios/Podfile || true
         else
-          sed -i '' '1s/^/platform :ios, '\''13.0'\''\n/' ios/Podfile
+          echo "🚨 Podfile belum ada, generate baru dengan platform :ios, '13.0'"
+          echo -e "platform :ios, '13.0'\n\n$(cat ios/Flutter/Generated.xcconfig)" > ios/Podfile
         fi
 
     - name: Install CocoaPods dependencies
