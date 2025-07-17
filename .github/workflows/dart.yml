@@ -1,50 +1,40 @@
-name: Flutter Build IPA
+name: Flutter Build & Release APK
 
 on:
   push:
     branches:
-      - main
-  workflow_dispatch:
+      - main # Ubah ke 'release' kalau mau trigger di branch release
+  workflow_dispatch: # Bisa juga manual trigger dari GitHub UI
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
+    # ✅ Checkout kode
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    # ✅ Setup Flutter
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.32.5'
-        channel: stable
+        flutter-version: '3.32.5' # Ganti dengan versi Flutter yang kamu pakai
+        channel: 'stable'
 
+    # ✅ Get dependencies
     - name: Install dependencies
       run: flutter pub get
 
-    # ✅ Patch Podfile untuk iOS 13.0 (1x saja)
-    - name: Ensure Podfile has iOS 13.0
+    # ✅ Build APK release
+    - name: Build APK (release)
+      run: flutter build apk --release
+
+    # ✅ Create Git Tag
+    - name: Create Git Tag
       run: |
-        if [ -f ios/Podfile ]; then
-          echo "✅ Podfile ditemukan, patching..."
-          sed -i '' "s/platform :ios, .*/platform :ios, '13.0'/" ios/Podfile || true
-        else
-          echo "🚨 Podfile belum ada, generate baru dengan platform :ios, '13.0'"
-          echo -e "platform :ios, '13.0'\n\n$(cat ios/Flutter/Generated.xcconfig)" > ios/Podfile
-        fi
-
-    - name: Install CocoaPods dependencies
-      run: |
-        cd ios
-        pod install
-        cd ..
-
-    - name: Build IPA (unsigned)
-      run: flutter build ipa --no-codesign
-
-    - name: Upload IPA Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: app-release.ipa
-        path: build/ios/ipa/*.ipa
+        TAG_NAME=v${{ github.run_number }}
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git tag $TAG_NAME
+        git push origin $TAG_NAME
