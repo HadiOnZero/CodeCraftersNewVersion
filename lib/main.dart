@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:syborgcate_workshop/constants/assets.dart';
 import 'login_page.dart';
 
 void main() async {
@@ -43,7 +44,7 @@ class _HomePagesState extends State<HomePages> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(),
+      drawer: Drawer(width: 350),
       appBar: AppBar(
         actions: [
           IconButton(
@@ -70,33 +71,27 @@ class _HomePagesState extends State<HomePages> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            Text(
-              'Welcome to CodeCrafters',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              'Multi Tools For Hackers and Developers',
-              style: TextStyle(fontSize: 15),
-            ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(12),
+        child: Expanded(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image(
+                  image: AssetImage(Assets.assetsShop),
+                  width: 150,
+                  height: 150,
                 ),
-                child: Center(
-                  child: Text(
-                    'Home Page Content',
-                    style: TextStyle(fontSize: 18, color: Colors.black54),
-                  ),
+                Text(
+                  'Welcome to CodeCrafters',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-              ),
+                Text(
+                  'Multi Tools for Hackers and Developers',
+                  style: TextStyle(fontSize: 15),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
