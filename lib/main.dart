@@ -68,7 +68,37 @@ class _HomePagesState extends State<HomePages> {
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
       ),
-      body: Padding(padding: const EdgeInsets.all(8.0), child: Column()),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            Text(
+              'Welcome to CodeCrafters',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              'Multi Tools For Hackers and Developers',
+              style: TextStyle(fontSize: 15),
+            ),
+            const SizedBox(height: 20),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
+                  child: Text(
+                    'Home Page Content',
+                    style: TextStyle(fontSize: 18, color: Colors.black54),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

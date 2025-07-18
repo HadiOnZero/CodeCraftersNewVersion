@@ -136,8 +136,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 16),
               SizedBox(
-                height: 50,
-                width: 150,
+                height: 55,
+                width: 250,
                 child: ElevatedButton(
                   style: ButtonStyle(
                     shape: WidgetStatePropertyAll(
