@@ -16,6 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passwordController = TextEditingController();
   String errorMessage = '';
   bool isLoading = false;
+  bool obscureText = true;
 
   Future<void> signIn() async {
     setState(() => isLoading = true);
@@ -24,17 +25,39 @@ class _LoginPageState extends State<LoginPage> {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-      setState(() => errorMessage = '');
-    } on FirebaseAuthException catch (e) {
-      setState(() => errorMessage = e.message ?? 'Login error');
-    } finally {
       setState(() {
-        isLoading = false;
+        errorMessage = '';
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const HomePages()),
+          PageRouteBuilder(
+            pageBuilder: (_, __, ___) => const HomePages(),
+            transitionsBuilder: (_, animation, __, child) {
+              return FadeTransition(opacity: animation, child: child);
+            },
+          ),
         );
       });
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        errorMessage = e.message ?? 'Login error';
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Login failed'),
+            content: Text(errorMessage),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('ok'),
+              ),
+            ],
+          ),
+        );
+      });
+    } finally {
+      setState(() => isLoading = false);
     }
   }
 
@@ -63,6 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                 controller: emailController,
                 cursorColor: Colors.black,
                 decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.email, color: Colors.black),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                     borderSide: BorderSide(color: Colors.grey),
@@ -83,6 +107,17 @@ class _LoginPageState extends State<LoginPage> {
                 cursorColor: Colors.black,
                 controller: passwordController,
                 decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.lock, color: Colors.black),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      obscureText ? Icons.visibility : Icons.visibility_off,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        obscureText = !obscureText;
+                      });
+                    },
+                  ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                     borderSide: BorderSide(color: Colors.grey),
@@ -97,11 +132,8 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
-                obscureText: true,
+                obscureText: obscureText,
               ),
-              const SizedBox(height: 16),
-              if (errorMessage.isNotEmpty)
-                Text(errorMessage, style: const TextStyle(color: Colors.red)),
               const SizedBox(height: 16),
               SizedBox(
                 height: 50,
@@ -118,11 +150,11 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: isLoading ? null : signIn,
                   child: isLoading
                       ? SizedBox(
+                          width: 20,
+                          height: 20,
                           child: const CircularProgressIndicator(
                             color: Colors.white,
                           ),
-                          width: 20,
-                          height: 20,
                         )
                       : const Text(
                           'Login',
@@ -141,7 +173,12 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 onPressed: () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => RegisterPage()),
+                  PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => const RegisterPage(),
+                    transitionsBuilder: (_, animation, __, child) {
+                      return FadeTransition(opacity: animation, child: child);
+                    },
+                  ),
                 ),
                 child: Text('SignUp', style: TextStyle(color: Colors.black)),
               ),

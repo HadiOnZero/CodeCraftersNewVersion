@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:syborgcate_workshop/login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -12,22 +12,69 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+  bool isError = false;
   String errorMessage = '';
   bool isLoading = false;
+  bool obscureText = true;
   Future<void> register() async {
     setState(() => isLoading = true);
     try {
       // Registration logic here
+      if (passwordController.text != confirmPasswordController.text) {
+        setState(() {
+          errorMessage = 'Passwords do not match';
+          isError = true;
+        });
+        return;
+      }
       FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-      setState(() => errorMessage = '');
+      showDialog(
+        context: context,
+        builder: (context) => AnimatedOpacity(
+          duration: const Duration(milliseconds: 300),
+          opacity: 1.0,
+          child: AlertDialog(
+            title: Text('Registration Successful'),
+            content: Text('You have successfully registered.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => const LoginPage(),
+                      transitionsBuilder: (_, animation, __, child) {
+                        return FadeTransition(opacity: animation, child: child);
+                      },
+                    ),
+                  );
+                },
+                child: Text('OK'),
+              ),
+            ],
+          ),
+        ),
+      );
     } catch (e) {
       setState(() => errorMessage = e.toString());
     } finally {
-      setState(() => isLoading = false);
+      setState(() {
+        isLoading = false;
+        isError = false;
+      });
     }
+  }
+
+  void toggleObscureText() {
+    setState(() {
+      obscureText = !obscureText;
+    });
   }
 
   @override
@@ -56,6 +103,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 controller: emailController,
                 cursorColor: Colors.black,
                 decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.email, color: Colors.black),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                     borderSide: BorderSide(color: Colors.grey),
@@ -74,9 +122,18 @@ class _RegisterPageState extends State<RegisterPage> {
               SizedBox(height: 16),
               TextField(
                 controller: passwordController,
-                obscureText: true,
+                obscureText: obscureText,
                 cursorColor: Colors.black,
                 decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.lock, color: Colors.black),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      obscureText ? Icons.visibility : Icons.visibility_off,
+                    ),
+                    onPressed: () {
+                      toggleObscureText();
+                    },
+                  ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                     borderSide: BorderSide(color: Colors.grey),
@@ -85,7 +142,29 @@ class _RegisterPageState extends State<RegisterPage> {
                     borderRadius: BorderRadius.circular(8.0),
                     borderSide: BorderSide(color: Colors.black, width: 2.0),
                   ),
-                  labelText: 'Email',
+                  labelText: 'Password',
+                  labelStyle: TextStyle(color: Colors.black),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
+              TextField(
+                controller: confirmPasswordController,
+                obscureText: obscureText,
+                cursorColor: Colors.black,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.lock, color: Colors.black),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(color: Colors.black, width: 2.0),
+                  ),
+                  labelText: 'Confirm Password',
                   labelStyle: TextStyle(color: Colors.black),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
@@ -104,24 +183,27 @@ class _RegisterPageState extends State<RegisterPage> {
                         borderRadius: BorderRadiusGeometry.circular(10),
                       ),
                     ),
-                    backgroundColor: WidgetStatePropertyAll(Colors.black),
+                    backgroundColor: isError
+                        ? WidgetStatePropertyAll(Colors.red)
+                        : WidgetStatePropertyAll(Colors.black),
                   ),
                   child: isLoading
                       ? SizedBox(
-                          child: CircularProgressIndicator(color: Colors.white),
                           height: 20,
                           width: 20,
+                          child: CircularProgressIndicator(color: Colors.white),
                         )
                       : Text(
                           'Register',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: isError ? Colors.black : Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                 ),
               ),
+              SizedBox(height: 16),
               if (errorMessage.isNotEmpty)
                 Text(errorMessage, style: TextStyle(color: Colors.red)),
             ],
