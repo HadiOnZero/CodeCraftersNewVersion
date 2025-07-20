@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:syborgcate_workshop/login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -45,15 +44,6 @@ class _RegisterPageState extends State<RegisterPage> {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
-                  Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => const LoginPage(),
-                      transitionsBuilder: (_, animation, __, child) {
-                        return FadeTransition(opacity: animation, child: child);
-                      },
-                    ),
-                  );
                 },
                 child: Text('OK'),
               ),
