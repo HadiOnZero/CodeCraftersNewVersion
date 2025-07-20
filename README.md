@@ -12,6 +12,7 @@ To deploy this project run
 ## Authors
 
 - [@IndonesianDedsec](https://github.com/IndonesianDedsec)
+- [@HadsXdevCate](https://github.com/HadsXdevCate)
 
 
 ## 🛠 Skills
