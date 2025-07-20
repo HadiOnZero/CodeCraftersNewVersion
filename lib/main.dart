@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:syborgcate_workshop/constants/assets.dart';
+import 'package:syborgcate_workshop/drawer_content.dart';
 import 'login_page.dart';
 
 void main() async {
@@ -44,7 +45,7 @@ class _HomePagesState extends State<HomePages> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(width: 350),
+      drawer: Drawer(width: 350, child: DrawerContent()),
       appBar: AppBar(
         actions: [
           IconButton(
@@ -52,6 +53,7 @@ class _HomePagesState extends State<HomePages> {
             onPressed: () async {
               await FirebaseAuth.instance.signOut();
               Navigator.pushReplacement(
+                // ignore: use_build_context_synchronously
                 context,
                 PageRouteBuilder(
                   pageBuilder: (_, __, ___) => const LoginPage(),
@@ -76,10 +78,34 @@ class _HomePagesState extends State<HomePages> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image(
-                  image: AssetImage(Assets.assetsShop),
-                  width: 150,
-                  height: 150,
+                GestureDetector(
+                  onDoubleTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('Follow My Github and Support :D'),
+                          content: Text(
+                            'https://github.com/IndonesianDedsec\n\nThanks to :\nSyborg Syndicate\nMusa Fawwaz\nMy Self ( Hadi Ramdhani )',
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text(
+                                'CLOSE',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: Image(
+                    image: AssetImage(Assets.assetsShop),
+                    width: 150,
+                    height: 150,
+                  ),
                 ),
                 Text(
                   'Welcome to CodeCrafters',
