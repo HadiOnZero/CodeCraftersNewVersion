@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lottie/lottie.dart';
 import 'package:syborgcate_workshop/constants/assets.dart';
 import 'package:syborgcate_workshop/drawer_content.dart';
 import 'login_page.dart';
@@ -75,20 +76,39 @@ class _HomePagesState extends State<HomePages> {
         padding: const EdgeInsets.all(8.0),
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(height: 250),
               GestureDetector(
                 onDoubleTap: () {
                   showDialog(
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: Text('Follow My Github and Support :D'),
+                        title: Row(
+                          children: [
+                            Image(
+                              image: AssetImage(Assets.assetsLauncher),
+                              width: 50,
+                              height: 50,
+                            ),
+                            SizedBox(width: 5),
+                            Text(
+                              'Follow My Github and Support :D',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
                         content: Text(
                           'https://github.com/IndonesianDedsec\n\nThanks to :\nSyborg Syndicate\nMusa Fawwaz\nMy Self ( Hadi Ramdhani )',
                         ),
                         actions: [
                           TextButton(
+                            style: ButtonStyle(
+                              overlayColor: WidgetStatePropertyAll(Colors.grey),
+                            ),
                             onPressed: () => Navigator.pop(context),
                             child: Text(
                               'CLOSE',
@@ -100,10 +120,10 @@ class _HomePagesState extends State<HomePages> {
                     },
                   );
                 },
-                child: Image(
-                  image: AssetImage(Assets.assetsShop),
-                  width: 150,
-                  height: 150,
+                child: Lottie.asset(
+                  Assets.assetsHacker,
+                  width: 200,
+                  height: 200,
                 ),
               ),
               Text(

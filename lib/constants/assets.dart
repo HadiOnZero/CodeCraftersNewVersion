@@ -7,4 +7,6 @@ class Assets {
   static const String assetsShop = "assets/shop.png";
   static const String assetsLogin = "assets/Login.json";
   static const String assetsRegister = "assets/SignUp.json";
+  static const String assetsHacker = "assets/hacker_logo.json";
+  static const String assetsLauncher = "assets/code.png";
 }
