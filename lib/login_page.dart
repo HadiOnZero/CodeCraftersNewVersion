@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:syborgcate_workshop/constants/assets.dart';
 import 'package:syborgcate_workshop/main.dart';
 import 'package:syborgcate_workshop/register_page.dart';
+import 'package:lottie/lottie.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -72,11 +73,7 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(height: 90),
-              Image(
-                image: AssetImage(Assets.assetsShop),
-                width: 150,
-                height: 150,
-              ),
+              Lottie.asset(Assets.assetsLogin, width: 200, height: 200),
               Text(
                 'Welcome to CodeCrafters',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),

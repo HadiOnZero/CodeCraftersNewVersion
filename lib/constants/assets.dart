@@ -5,4 +5,6 @@ class Assets {
   /// Assets for assetsShop
   /// assets/shop.png
   static const String assetsShop = "assets/shop.png";
+  static const String assetsLogin = "assets/Login.json";
+  static const String assetsRegister = "assets/SignUp.json";
 }

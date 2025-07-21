@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'constants/assets.dart';
+import 'package:lottie/lottie.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -42,9 +44,7 @@ class _RegisterPageState extends State<RegisterPage> {
             content: Text('You have successfully registered.'),
             actions: [
               TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
+                onPressed: () => Navigator.of(context).pop(),
                 child: Text('OK'),
               ),
             ],
@@ -78,11 +78,7 @@ class _RegisterPageState extends State<RegisterPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(height: 90),
-              Image(
-                image: AssetImage('assets/shop.png'),
-                width: 150,
-                height: 150,
-              ),
+              Lottie.asset(Assets.assetsRegister),
               Text(
                 'Welcome to CodeCrafters\nsign up to continue',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
