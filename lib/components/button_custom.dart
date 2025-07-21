@@ -13,6 +13,7 @@ class ButtonCustom extends StatelessWidget {
         shape: WidgetStatePropertyAll(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
+        alignment: Alignment.centerLeft,
       ),
       onPressed: actions,
       child: Text(

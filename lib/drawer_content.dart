@@ -32,7 +32,7 @@ class DrawerContent extends StatelessWidget {
           ),
           SizedBox(height: 5),
           SizedBox(
-            width: 230,
+            width: 250,
             child: ButtonCustom(
               titles: 'SQLi Checker',
               actions: () {
@@ -50,8 +50,13 @@ class DrawerContent extends StatelessWidget {
           ),
           SizedBox(height: 1),
           SizedBox(
-            width: 230,
+            width: 250,
             child: ButtonCustom(titles: 'SMB Enumeration', actions: () {}),
+          ),
+          SizedBox(height: 1),
+          SizedBox(
+            width: 250,
+            child: ButtonCustom(titles: 'SELIDIKI ID', actions: () {}),
           ),
         ],
       ),

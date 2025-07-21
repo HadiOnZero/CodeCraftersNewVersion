@@ -9,4 +9,6 @@ class Assets {
   static const String assetsRegister = "assets/SignUp.json";
   static const String assetsHacker = "assets/hacker_logo.json";
   static const String assetsLauncher = "assets/code.png";
+  static const String sqlCheck = "assets/security.png";
+  static const String sqlCheckLogo = "assets/sqlcheck.json";
 }
