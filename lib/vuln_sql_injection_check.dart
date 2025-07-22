@@ -191,6 +191,58 @@ class _VulnSqlInjectionCheckState extends State<VulnSqlInjectionCheck> {
               ),
               SizedBox(height: 30),
               Text('COPYRIGHT HADI RAMDHANI 2025'),
+              TextButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text(
+                          'Buy me a coffee',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        content: SizedBox(
+                          height: 100,
+                          child: Column(
+                            children: [
+                              Text(
+                                'If you like this app, consider buying me a coffee to support my work.\n\n',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              Text(
+                                'Dana Accunt : 0857-1234-5678\nor contact me on whatsapp : 0838-4011-5112',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            style: ButtonStyle(
+                              overlayColor: WidgetStatePropertyAll(Colors.grey),
+                            ),
+                            onPressed: () => Navigator.pop(context),
+                            child: Text(
+                              'CLOSE',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: Text(
+                  'Buy me a coffee',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
             ],
           ),
         ),
