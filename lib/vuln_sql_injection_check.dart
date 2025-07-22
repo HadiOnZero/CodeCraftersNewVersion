@@ -77,7 +77,7 @@ class _VulnSqlInjectionCheckState extends State<VulnSqlInjectionCheck> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              Lottie.asset(Assets.sqlCheckLogo, width: 200, height: 200),
+              Lottie.asset(Assets.assetsHackerLogo, width: 200, height: 200),
               SizedBox(height: 40),
               Row(
                 children: [
