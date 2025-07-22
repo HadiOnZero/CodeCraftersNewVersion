@@ -35,6 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
+      if (!mounted) return;
       showDialog(
         context: context,
         builder: (context) => AnimatedOpacity(
