@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:syborgcate_workshop/login_page.dart';
 import 'constants/assets.dart';
 import 'package:lottie/lottie.dart';
 
@@ -44,7 +45,18 @@ class _RegisterPageState extends State<RegisterPage> {
             content: Text('You have successfully registered.'),
             actions: [
               TextButton(
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () async {
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => LoginPage(),
+                      transitionsBuilder: (_, animation, __, child) {
+                        return FadeTransition(opacity: animation, child: child);
+                      },
+                    ),
+                  );
+                },
                 child: Text('OK'),
               ),
             ],
