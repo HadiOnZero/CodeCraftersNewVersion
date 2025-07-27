@@ -65,7 +65,12 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('CodeCrafters')),
+      appBar: AppBar(
+        title: const Text(
+          'CodeCrafters',
+          style: TextStyle(fontFamily: 'pixels'),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -76,9 +81,13 @@ class _LoginPageState extends State<LoginPage> {
               Lottie.asset(Assets.assetsLogin, width: 200, height: 200),
               Text(
                 'Welcome to CodeCrafters',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'pixels',
+                ),
               ),
-              SizedBox(height: 90),
+              SizedBox(height: 50),
               TextField(
                 controller: emailController,
                 cursorColor: Colors.black,
@@ -159,6 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                             fontSize: 20,
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'pixels',
                           ),
                         ),
                 ),
@@ -177,7 +187,10 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                 ),
-                child: Text('SignUp', style: TextStyle(color: Colors.black)),
+                child: Text(
+                  'SignUp',
+                  style: TextStyle(color: Colors.black, fontFamily: 'pixels'),
+                ),
               ),
             ],
           ),

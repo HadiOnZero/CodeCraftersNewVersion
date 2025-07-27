@@ -61,7 +61,7 @@ class _VulnSqlInjectionCheckState extends State<VulnSqlInjectionCheck> {
         centerTitle: true,
         title: Text(
           'Vulnerability SQL Injection Checker',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: TextStyle(color: Colors.black, fontFamily: 'pixels'),
         ),
         actions: [
           IconButton(
@@ -213,7 +213,7 @@ class _VulnSqlInjectionCheckState extends State<VulnSqlInjectionCheck> {
                                 style: TextStyle(color: Colors.black),
                               ),
                               Text(
-                                'Dana Accunt : 0857-1234-5678\nor contact me on whatsapp : 0838-4011-5112',
+                                'Dana Account : 0857-1234-5678\nor contact me on whatsapp : 0838-4011-5112',
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,

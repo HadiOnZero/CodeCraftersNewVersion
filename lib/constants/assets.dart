@@ -12,4 +12,5 @@ class Assets {
   static const String sqlCheck = "assets/security.png";
   static const String sqlCheckLogo = "assets/sqlcheck.json";
   static const String assetsHackerLogo = "assets/hacker.json";
+  static const String pixelFont = "assets/fonts/pixel.ttf";
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:syborgcate_workshop/components/button_custom.dart';
 import 'package:syborgcate_workshop/constants/assets.dart';
+import 'package:syborgcate_workshop/selidiki_id.dart';
+import 'package:syborgcate_workshop/smb_enum_nmap.dart';
 import 'package:syborgcate_workshop/vuln_sql_injection_check.dart';
 
 class DrawerContent extends StatelessWidget {
@@ -51,12 +53,38 @@ class DrawerContent extends StatelessWidget {
           SizedBox(height: 1),
           SizedBox(
             width: 250,
-            child: ButtonCustom(titles: 'SMB Enumeration', actions: () {}),
+            child: ButtonCustom(
+              titles: 'SMB Enumeration with nmap',
+              actions: () {
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => SmbEnumNmap(),
+                    transitionsBuilder: (_, animation, __, child) {
+                      return FadeTransition(opacity: animation, child: child);
+                    },
+                  ),
+                );
+              },
+            ),
           ),
           SizedBox(height: 1),
           SizedBox(
             width: 250,
-            child: ButtonCustom(titles: 'SELIDIKI ID', actions: () {}),
+            child: ButtonCustom(
+              titles: 'SELIDIKI ID',
+              actions: () {
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => SelidikiId(),
+                    transitionsBuilder: (_, animation, __, child) {
+                      return FadeTransition(opacity: animation, child: child);
+                    },
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),

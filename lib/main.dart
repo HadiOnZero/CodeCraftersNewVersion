@@ -31,6 +31,7 @@ class MainApp extends StatelessWidget {
           return const LoginPage();
         },
       ),
+      title: 'CodeCrafters Hacker & DevTools',
     );
   }
 }
@@ -69,7 +70,7 @@ class _HomePagesState extends State<HomePages> {
         centerTitle: true,
         title: Text(
           'CodeCrafters',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: TextStyle(color: Colors.black, fontFamily: 'pixels'),
         ),
       ),
       body: Padding(

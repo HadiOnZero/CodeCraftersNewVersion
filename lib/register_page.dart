@@ -96,12 +96,13 @@ class _RegisterPageState extends State<RegisterPage> {
             children: [
               SizedBox(height: 90),
               Lottie.asset(Assets.assetsRegister),
+              SizedBox(height: 20),
               Text(
                 'Welcome to CodeCrafters\nsign up to continue',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 90),
+              SizedBox(height: 50),
               TextField(
                 controller: emailController,
                 cursorColor: Colors.black,

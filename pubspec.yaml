@@ -25,6 +25,11 @@ flutter:
   assets:
     - assets/
 
+  fonts:
+    - family: pixels
+      fonts:
+        - asset: assets/fonts/pixel.ttf
+
 flutter_assets:
     assets_path: assets/
     output_path: lib/constants/
