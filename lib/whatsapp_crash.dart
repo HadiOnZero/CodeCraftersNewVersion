@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class WhatsappCrash extends StatelessWidget {
   const WhatsappCrash({super.key});
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
