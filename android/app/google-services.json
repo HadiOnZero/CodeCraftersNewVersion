@@ -1,29 +1,11 @@
 {
   "project_info": {
     "project_number": "194359963045",
+    "firebase_url": "https://syborg-syndicate-workshop-default-rtdb.firebaseio.com",
     "project_id": "syborg-syndicate-workshop",
     "storage_bucket": "syborg-syndicate-workshop.firebasestorage.app"
   },
   "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:194359963045:android:bdf48b82223eebb8234c4c",
-        "android_client_info": {
-          "package_name": "com.example.syborgcate_workshop"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCgPOYpcM_-y3eCaBB2It7j6ImUUxP-aFE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
     {
       "client_info": {
         "mobilesdk_app_id": "1:194359963045:android:ef267183da1223b4234c4c",

@@ -5,11 +5,43 @@ import 'package:lottie/lottie.dart';
 import 'package:syborgcate_workshop/constants/assets.dart';
 import 'package:syborgcate_workshop/drawer_content.dart';
 import 'login_page.dart';
+import 'package:flutter/services.dart';
+import 'dart:io';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const MainApp());
+
+  print('🚀 Starting Firebase initialization...');
+  print('Platform: ${Platform.operatingSystem}');
+
+  try {
+    // Cek apakah file GoogleService-Info.plist ada
+    if (Platform.isIOS) {
+      try {
+        await rootBundle.load('GoogleService-Info.plist');
+        print('✅ GoogleService-Info.plist found');
+      } catch (e) {
+        print('❌ GoogleService-Info.plist NOT found: $e');
+      }
+    }
+
+    // Inisialisasi Firebase
+    FirebaseApp app = await Firebase.initializeApp();
+    print('✅ Firebase initialized successfully');
+    print('App name: ${app.name}');
+    print('Options: ${app.options}');
+  } catch (e) {
+    print('❌ Firebase initialization failed');
+    print('Error: $e');
+    print('Error type: ${e.runtimeType}');
+
+    if (e is FirebaseException) {
+      print('Firebase code: ${e.code}');
+      print('Firebase message: ${e.message}');
+    }
+  }
+
+  runApp(MainApp());
 }
 
 class MainApp extends StatelessWidget {

@@ -23,10 +23,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -52,6 +49,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '194359963045',
     projectId: 'syborg-syndicate-workshop',
     authDomain: 'syborg-syndicate-workshop.firebaseapp.com',
+    databaseURL: 'https://syborg-syndicate-workshop-default-rtdb.firebaseio.com',
     storageBucket: 'syborg-syndicate-workshop.firebasestorage.app',
   );
 
@@ -60,6 +58,7 @@ class DefaultFirebaseOptions {
     appId: '1:194359963045:android:ef267183da1223b4234c4c',
     messagingSenderId: '194359963045',
     projectId: 'syborg-syndicate-workshop',
+    databaseURL: 'https://syborg-syndicate-workshop-default-rtdb.firebaseio.com',
     storageBucket: 'syborg-syndicate-workshop.firebasestorage.app',
   );
 
@@ -70,6 +69,16 @@ class DefaultFirebaseOptions {
     projectId: 'syborg-syndicate-workshop',
     authDomain: 'syborg-syndicate-workshop.firebaseapp.com',
     storageBucket: 'syborg-syndicate-workshop.firebasestorage.app',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyCle6XsAwZ5EsiENSsXV-hWbDzOWqW5Bvg',
+    appId: '1:194359963045:ios:71e56942f5cbefd1234c4c',
+    messagingSenderId: '194359963045',
+    projectId: 'syborg-syndicate-workshop',
+    databaseURL: 'https://syborg-syndicate-workshop-default-rtdb.firebaseio.com',
+    storageBucket: 'syborg-syndicate-workshop.firebasestorage.app',
+    iosBundleId: 'com.syborgcate.workshop',
   );
 
 }
