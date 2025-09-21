@@ -126,7 +126,7 @@ class _HomePagesState extends State<HomePages> {
                             ),
                             SizedBox(width: 5),
                             Text(
-                              'Follow My Github and Support :D',
+                              'Support me :D',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
@@ -135,7 +135,7 @@ class _HomePagesState extends State<HomePages> {
                           ],
                         ),
                         content: Text(
-                          'https://github.com/IndonesianDedsec\n\nThanks to :\nSyborg Syndicate\nMusa Fawwaz\nMy Self ( Hadi Ramdhani )',
+                          'https://github.com/IndonesianDedsec\nhttps://github.com/HadiOnZero\n\nThanks to :\nSyborg Syndicate\nMusa Fawwaz\nMy Self ( Hadi Ramdhani )',
                         ),
                         actions: [
                           TextButton(

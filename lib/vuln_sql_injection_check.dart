@@ -25,10 +25,11 @@ class _VulnSqlInjectionCheckState extends State<VulnSqlInjectionCheck> {
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
+                fontFamily: 'pixels',
               ),
             ),
             content: SizedBox(
-              height: 90,
+              height: 150,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -202,10 +203,11 @@ class _VulnSqlInjectionCheckState extends State<VulnSqlInjectionCheck> {
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'pixels',
                           ),
                         ),
                         content: SizedBox(
-                          height: 100,
+                          height: 150,
                           child: Column(
                             children: [
                               Text(

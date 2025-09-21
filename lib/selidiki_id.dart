@@ -8,7 +8,7 @@ class SelidikiId extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'SMB Enumeration',
+          'Selidiki ID',
           style: TextStyle(color: Colors.black, fontFamily: 'pixels'),
         ),
         centerTitle: true,

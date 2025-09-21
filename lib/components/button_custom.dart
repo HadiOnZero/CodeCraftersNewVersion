@@ -18,7 +18,11 @@ class ButtonCustom extends StatelessWidget {
       onPressed: actions,
       child: Text(
         titles,
-        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 12,
+        ),
       ),
     );
   }

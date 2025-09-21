@@ -21,6 +21,7 @@ class DrawerContent extends StatelessWidget {
               color: Colors.black,
               fontWeight: FontWeight.bold,
               fontSize: 30,
+              fontFamily: 'pixels',
             ),
           ),
           SizedBox(height: 20),
