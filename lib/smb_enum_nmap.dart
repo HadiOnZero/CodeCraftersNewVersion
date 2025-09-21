@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:syborgcate_workshop/components/button_custom.dart';
 import 'package:syborgcate_workshop/components/custom_text_field.dart';
+import 'package:lottie/lottie.dart';
+import 'package:syborgcate_workshop/constants/assets.dart';
 
 class SmbEnumNmap extends StatefulWidget {
   const SmbEnumNmap({super.key});
@@ -54,7 +57,68 @@ class _SmbEnumNmapState extends State<SmbEnumNmap> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          children: [CustomTextField(fieldController: _targetController)],
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Lottie.asset(Assets.hackerLaptop, width: 200, height: 200),
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _targetController,
+                    cursorColor: Colors.black,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide(color: Colors.black, width: 2.0),
+                      ),
+                      labelText: 'IP OR URL',
+                      labelStyle: TextStyle(color: Colors.black),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10),
+                SizedBox(
+                  child: ButtonCustom(titles: 'Run', actions: () {}),
+                  height: 55,
+                ),
+              ],
+            ),
+            Divider(),
+            Text('Console'),
+            Expanded(
+              child: TextField(
+                textAlignVertical: TextAlignVertical.top,
+                controller: _targetController,
+                cursorColor: Colors.black,
+                maxLines: null,
+                expands: true,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(color: Colors.black, width: 2.0),
+                  ),
+                  labelStyle: TextStyle(color: Colors.black),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
+            ),
+            Column(children: [Divider(), Text('Code By Hadi Ramdhani')]),
+          ],
         ),
       ),
     );
