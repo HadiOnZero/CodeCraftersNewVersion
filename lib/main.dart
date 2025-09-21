@@ -130,6 +130,7 @@ class _HomePagesState extends State<HomePages> {
                               style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
+                                fontFamily: 'pixels',
                               ),
                             ),
                           ],
@@ -161,11 +162,15 @@ class _HomePagesState extends State<HomePages> {
               ),
               Text(
                 'Welcome to CodeCrafters',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'pixels',
+                ),
               ),
               Text(
                 'Multi Tools for Hackers and Developers',
-                style: TextStyle(fontSize: 15),
+                style: TextStyle(fontSize: 12),
               ),
             ],
           ),
