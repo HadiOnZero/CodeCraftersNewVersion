@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'constants/assets.dart';
+import 'package:http/http.dart' as http;
 
 class VulnSqlInjectionCheck extends StatefulWidget {
   const VulnSqlInjectionCheck({super.key});
@@ -11,7 +12,30 @@ class VulnSqlInjectionCheck extends StatefulWidget {
 
 class _VulnSqlInjectionCheckState extends State<VulnSqlInjectionCheck> {
   final TextEditingController _targetController = TextEditingController();
-  final TextEditingController _resultController = TextEditingController();
+  TextEditingController _resultController = TextEditingController();
+
+  Future<void> well() async {
+    try {
+      final String uri = _targetController.text;
+      final data = await http.get(Uri.parse(uri));
+      print(uri);
+      print(data.body);
+      if (data.body.contains("SQL Syntax;")) {
+        setState(() {
+          _resultController.text = "Target Vuln\n${data.body}";
+        });
+      } else {
+        setState(() {
+          _resultController.text = "Target Not Vuln";
+        });
+      }
+    } catch (e) {
+      print(e);
+      setState(() {
+        _resultController.text = "Terjadi kesalahan : ${e.toString()}";
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +153,7 @@ class _VulnSqlInjectionCheckState extends State<VulnSqlInjectionCheck> {
                     height: 50,
                     width: 130,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => well(),
                       style: ButtonStyle(
                         backgroundColor: WidgetStatePropertyAll(Colors.black),
                         shape: WidgetStatePropertyAll(

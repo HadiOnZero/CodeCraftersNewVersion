@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +10,9 @@ import 'package:flutter/services.dart';
 import 'dart:io';
 
 void main() async {
+  if (kDebugMode) {
+    HttpOverrides.global = MyHttpOverrides();
+  }
   WidgetsFlutterBinding.ensureInitialized();
 
   print('🚀 Starting Firebase initialization...');
@@ -42,6 +46,15 @@ void main() async {
   }
 
   runApp(MainApp());
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
 }
 
 class MainApp extends StatelessWidget {

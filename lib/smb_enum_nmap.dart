@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:syborgcate_workshop/components/button_custom.dart';
-import 'package:syborgcate_workshop/components/custom_text_field.dart';
 import 'package:lottie/lottie.dart';
 import 'package:syborgcate_workshop/constants/assets.dart';
 
@@ -87,8 +86,8 @@ class _SmbEnumNmapState extends State<SmbEnumNmap> {
                 ),
                 SizedBox(width: 10),
                 SizedBox(
-                  child: ButtonCustom(titles: 'Run', actions: () {}),
                   height: 55,
+                  child: ButtonCustom(titles: 'Run', actions: () {}),
                 ),
               ],
             ),
