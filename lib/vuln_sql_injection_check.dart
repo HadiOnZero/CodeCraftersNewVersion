@@ -38,6 +38,13 @@ class _VulnSqlInjectionCheckState extends State<VulnSqlInjectionCheck> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _targetController.dispose();
+    _resultController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     void aboutSqliScanner() {
       showDialog(

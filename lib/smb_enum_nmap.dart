@@ -12,6 +12,7 @@ class SmbEnumNmap extends StatefulWidget {
 
 class _SmbEnumNmapState extends State<SmbEnumNmap> {
   final TextEditingController _targetController = TextEditingController();
+  final TextEditingController _consoleController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +33,9 @@ class _SmbEnumNmapState extends State<SmbEnumNmap> {
                         fontFamily: 'pixels',
                       ),
                     ),
-                    content: Text('Description'),
+                    content: Text(
+                      'SMB Enumeration itu proses mengumpulkan informasi dari layanan SMB (Server Message Block) yang berjalan di sebuah host atau server. SMB sendiri adalah protokol yang biasa dipakai di Windows (dan kadang di Linux dengan Samba) untuk file sharing, printer sharing, dan komunikasi antar sistem.',
+                    ),
                     actions: [
                       TextButton(
                         style: ButtonStyle(
@@ -96,7 +99,7 @@ class _SmbEnumNmapState extends State<SmbEnumNmap> {
             Expanded(
               child: TextField(
                 textAlignVertical: TextAlignVertical.top,
-                controller: _targetController,
+                controller: _consoleController,
                 cursorColor: Colors.black,
                 maxLines: null,
                 expands: true,
