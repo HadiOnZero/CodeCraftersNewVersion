@@ -1,54 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:syborgcate_workshop/providers/selidiki_provider.dart';
+import 'package:syborgcate_workshop/providers/xss_provider.dart';
 
-class SelidikiId extends StatelessWidget {
-  SelidikiId({super.key});
+class XssCheck extends StatelessWidget {
+  const XssCheck({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<SelidikiProvider>(
+    return Consumer<XssProvider>(
       builder: (context, provider, child) {
-        return _SelidikiContent(provider: provider);
+        return _XssContent(provider: provider);
       },
     );
   }
 }
 
-class _SelidikiContent extends StatefulWidget {
-  final SelidikiProvider provider;
+class _XssContent extends StatefulWidget {
+  final XssProvider provider;
 
-  const _SelidikiContent({required this.provider});
+  const _XssContent({required this.provider});
 
   @override
-  State<_SelidikiContent> createState() => _SelidikiContentState();
+  State<_XssContent> createState() => _XssContentState();
 }
 
-class _SelidikiContentState extends State<_SelidikiContent> {
-  final TextEditingController _targetController = TextEditingController();
-  final TextEditingController _resultController = TextEditingController();
+class _XssContentState extends State<_XssContent> {
+  final TextEditingController _urlController = TextEditingController();
+  final TextEditingController _payloadController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    // Set default values from provider
-    widget.provider.setDocumentType(widget.provider.documentTypes[0]);
+    _payloadController.text = '<script>alert("XSS")</script>';
+    // Sync with provider
+    widget.provider.setPayload(_payloadController.text);
   }
 
   @override
   void dispose() {
-    _targetController.dispose();
-    _resultController.dispose();
+    _urlController.dispose();
+    _payloadController.dispose();
     super.dispose();
   }
 
-  Future<void> _performSearch() async {
-    if (_targetController.text.isEmpty) {
+  Future<void> _scanForXss() async {
+    if (_urlController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'Please enter a target name',
+            'Please enter a URL',
             style: TextStyle(color: Colors.greenAccent, fontFamily: 'pixels'),
           ),
           backgroundColor: Colors.grey[900],
@@ -62,14 +62,15 @@ class _SelidikiContentState extends State<_SelidikiContent> {
     }
 
     // Update provider state
-    widget.provider.setTarget(_targetController.text);
+    widget.provider.setUrl(_urlController.text);
+    widget.provider.setPayload(_payloadController.text);
 
     try {
-      await widget.provider.performSearch();
+      await widget.provider.performScan();
 
-      // Update result controller with provider result
+      // Update UI based on provider state
       setState(() {
-        _resultController.text = widget.provider.result;
+        // Result is already set in provider, UI will update automatically
       });
     } catch (e) {
       // Error handling is done in provider
@@ -78,7 +79,7 @@ class _SelidikiContentState extends State<_SelidikiContent> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<SelidikiProvider>(
+    return Consumer<XssProvider>(
       builder: (context, provider, child) {
         return Scaffold(
           backgroundColor: Colors.black,
@@ -86,11 +87,11 @@ class _SelidikiContentState extends State<_SelidikiContent> {
             backgroundColor: Colors.grey[900],
             elevation: 0,
             title: Text(
-              'OSINT INVESTIGATOR',
+              'XSS SECURITY CHECKER',
               style: TextStyle(
-                color: Colors.greenAccent,
                 fontFamily: 'pixels',
                 fontWeight: FontWeight.bold,
+                color: Colors.greenAccent,
                 letterSpacing: 2,
                 fontSize: 20,
               ),
@@ -110,21 +111,19 @@ class _SelidikiContentState extends State<_SelidikiContent> {
                           side: BorderSide(color: Colors.greenAccent, width: 2),
                         ),
                         title: Text(
-                          'OSINT INVESTIGATOR',
+                          'XSS SECURITY CHECKER',
                           style: TextStyle(
-                            color: Colors.greenAccent,
-                            fontWeight: FontWeight.bold,
                             fontFamily: 'pixels',
+                            fontWeight: FontWeight.bold,
+                            color: Colors.greenAccent,
                             letterSpacing: 2,
                           ),
                         ),
-                        content: SingleChildScrollView(
-                          child: Text(
-                            'Open Source Intelligence (OSINT) Investigation Tool untuk mengumpulkan informasi dari sumber-sumber terbuka.\n\nTool ini membantu investigator dalam:\n• Profiling target individu\n• Analisis dokumen identitas\n• Investigasi digital forensics\n• Data mining dari database publik\n\nMendukung berbagai jenis dokumen identitas dan data pribadi untuk keperluan investigasi.',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'pixels',
-                            ),
+                        content: Text(
+                          'Cross-Site Scripting (XSS) Security Checker untuk mengidentifikasi potensi kerentanan pada aplikasi web. Alat ini membantu developer dan security tester mengevaluasi keamanan aplikasi web.',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'pixels',
                           ),
                         ),
                         actions: [
@@ -158,319 +157,7 @@ class _SelidikiContentState extends State<_SelidikiContent> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Header Card with Animation - Hacker Theme
-                Container(
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[900],
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: Colors.greenAccent.withOpacity(0.3),
-                      width: 1,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.greenAccent.withOpacity(0.1),
-                        blurRadius: 10,
-                        spreadRadius: 2,
-                        offset: Offset(0, 0),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 120,
-                        height: 120,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[850],
-                          borderRadius: BorderRadius.circular(60),
-                          border: Border.all(
-                            color: Colors.greenAccent.withOpacity(0.3),
-                            width: 1,
-                          ),
-                        ),
-                        child: Lottie.asset(
-                          'assets/logo.json',
-                          width: 100,
-                          height: 100,
-                        ),
-                      ),
-                      SizedBox(height: 15),
-                      Text(
-                        'OSINT INTELLIGENCE GATHERING',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.greenAccent,
-                          fontFamily: 'pixels',
-                          letterSpacing: 2,
-                        ),
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        'Gather intelligence from open source data and identity documents',
-                        style: TextStyle(
-                          color: Colors.greenAccent.withOpacity(0.8),
-                          fontSize: 14,
-                          fontFamily: 'pixels',
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-
-                SizedBox(height: 20),
-
-                // Target Input Card - Hacker Theme
-                Container(
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[900],
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: Colors.greenAccent.withOpacity(0.3),
-                      width: 1,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.greenAccent.withOpacity(0.1),
-                        blurRadius: 10,
-                        spreadRadius: 2,
-                        offset: Offset(0, 0),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'INVESTIGATION TARGET',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.greenAccent,
-                          fontFamily: 'pixels',
-                          letterSpacing: 2,
-                        ),
-                      ),
-                      SizedBox(height: 15),
-                      TextField(
-                        controller: _targetController,
-                        cursorColor: Colors.greenAccent,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'pixels',
-                        ),
-                        decoration: InputDecoration(
-                          hintText: 'Enter target name or identifier',
-                          hintStyle: TextStyle(
-                            color: Colors.greenAccent.withOpacity(0.5),
-                            fontFamily: 'pixels',
-                          ),
-                          labelText: 'SUBJECT NAME',
-                          labelStyle: TextStyle(
-                            color: Colors.greenAccent.withOpacity(0.8),
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'pixels',
-                          ),
-                          filled: true,
-                          fillColor: Colors.grey[850],
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide.none,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
-                              color: Colors.greenAccent.withOpacity(0.3),
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
-                              color: Colors.greenAccent,
-                              width: 2,
-                            ),
-                          ),
-                          prefixIcon: Icon(
-                            Icons.person_search,
-                            color: Colors.greenAccent.withOpacity(0.8),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                SizedBox(height: 20),
-
-                // Document Type Card - Hacker Theme
-                Container(
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[900],
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: Colors.greenAccent.withOpacity(0.3),
-                      width: 1,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.greenAccent.withOpacity(0.1),
-                        blurRadius: 10,
-                        spreadRadius: 2,
-                        offset: Offset(0, 0),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'DATA SOURCE',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.greenAccent,
-                          fontFamily: 'pixels',
-                          letterSpacing: 2,
-                        ),
-                      ),
-                      SizedBox(height: 15),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                        decoration: BoxDecoration(
-                          color: Colors.grey[850],
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: Colors.greenAccent.withOpacity(0.3),
-                            width: 1,
-                          ),
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            isExpanded: true,
-                            borderRadius: BorderRadius.circular(8),
-                            dropdownColor: Colors.grey[900],
-                            value: provider.documentType,
-                            icon: Icon(
-                              Icons.arrow_drop_down,
-                              color: Colors.greenAccent,
-                            ),
-                            style: TextStyle(
-                              color: Colors.greenAccent,
-                              fontFamily: 'pixels',
-                            ),
-                            items: provider.documentTypes
-                                .map(
-                                  (value) => DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(
-                                      value,
-                                      style: TextStyle(
-                                        color: Colors.greenAccent,
-                                        fontFamily: 'pixels',
-                                      ),
-                                    ),
-                                  ),
-                                )
-                                .toList(),
-                            onChanged: (String? newValue) {
-                              if (newValue != null) {
-                                setState(() {
-                                  // Update local state
-                                });
-                                provider.setDocumentType(newValue);
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                SizedBox(height: 20),
-
-                // Search Button - Hacker Theme
-                Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.greenAccent.withOpacity(0.3),
-                        blurRadius: 15,
-                        spreadRadius: 2,
-                        offset: Offset(0, 0),
-                      ),
-                    ],
-                  ),
-                  child: ElevatedButton(
-                    onPressed: provider.isSearching ? null : _performSearch,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent,
-                      foregroundColor: Colors.greenAccent,
-                      padding: EdgeInsets.symmetric(vertical: 18),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        side: BorderSide(color: Colors.greenAccent, width: 2),
-                      ),
-                      elevation: 0,
-                    ),
-                    child: provider.isSearching
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    Colors.greenAccent,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 12),
-                              Text(
-                                'INVESTIGATING...',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'pixels',
-                                  letterSpacing: 2,
-                                ),
-                              ),
-                            ],
-                          )
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.search,
-                                size: 20,
-                                color: Colors.greenAccent,
-                              ),
-                              SizedBox(width: 8),
-                              Text(
-                                'GATHER INTELLIGENCE',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'pixels',
-                                  letterSpacing: 2,
-                                ),
-                              ),
-                            ],
-                          ),
-                  ),
-                ),
-
-                SizedBox(height: 20),
-
-                // Result Console Card - Hacker Theme
+                // Header Card - Hacker Theme
                 Container(
                   padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
@@ -494,54 +181,120 @@ class _SelidikiContentState extends State<_SelidikiContent> {
                     children: [
                       Row(
                         children: [
-                          Icon(
-                            Icons.terminal,
-                            color: Colors.greenAccent,
-                            size: 20,
-                          ),
-                          SizedBox(width: 10),
-                          Text(
-                            'INTELLIGENCE REPORT',
-                            style: TextStyle(
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: Colors.greenAccent,
+                                width: 2,
+                              ),
+                            ),
+                            child: Icon(
+                              Icons.security,
                               color: Colors.greenAccent,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'pixels',
-                              letterSpacing: 1,
+                              size: 24,
+                            ),
+                          ),
+                          SizedBox(width: 15),
+                          Expanded(
+                            child: Text(
+                              'CROSS-SITE SCRIPTING (XSS) SECURITY CHECK',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.greenAccent,
+                                fontFamily: 'pixels',
+                                letterSpacing: 1,
+                              ),
                             ),
                           ),
                         ],
                       ),
                       SizedBox(height: 15),
-                      Container(
-                        height: 200,
-                        padding: EdgeInsets.all(15),
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: Colors.greenAccent.withOpacity(0.3),
-                          ),
+                      Text(
+                        'Check for XSS vulnerabilities to improve web application security.',
+                        style: TextStyle(
+                          color: Colors.greenAccent.withOpacity(0.8),
+                          fontSize: 14,
+                          fontFamily: 'pixels',
                         ),
-                        child: TextField(
-                          controller: _resultController,
-                          maxLines: null,
-                          expands: true,
-                          textAlignVertical: TextAlignVertical.top,
-                          cursorColor: Colors.greenAccent,
-                          style: TextStyle(
-                            color: Colors.greenAccent,
-                            fontFamily: 'monospace',
-                            fontSize: 12,
+                      ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: 20),
+
+                // URL Input Card - Hacker Theme
+                Container(
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[900],
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: Colors.greenAccent.withOpacity(0.3),
+                      width: 1,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.greenAccent.withOpacity(0.1),
+                        blurRadius: 10,
+                        spreadRadius: 2,
+                        offset: Offset(0, 0),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'TARGET HOST',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.greenAccent,
+                          fontFamily: 'pixels',
+                          letterSpacing: 2,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: _urlController,
+                        cursorColor: Colors.greenAccent,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'pixels',
+                        ),
+                        decoration: InputDecoration(
+                          hintText: 'https://target.com/vulnerable.php?id=',
+                          hintStyle: TextStyle(
+                            color: Colors.greenAccent.withOpacity(0.5),
+                            fontFamily: 'pixels',
                           ),
-                          decoration: InputDecoration(
-                            hintText: 'Intelligence data will appear here...',
-                            hintStyle: TextStyle(
-                              color: Colors.greenAccent.withOpacity(0.5),
-                              fontFamily: 'monospace',
-                              fontSize: 12,
+                          filled: true,
+                          fillColor: Colors.grey[850],
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide.none,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: Colors.greenAccent.withOpacity(0.3),
                             ),
-                            border: InputBorder.none,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: Colors.greenAccent,
+                              width: 2,
+                            ),
+                          ),
+                          prefixIcon: Icon(
+                            Icons.link,
+                            color: Colors.greenAccent.withOpacity(0.8),
                           ),
                         ),
                       ),
@@ -551,19 +304,235 @@ class _SelidikiContentState extends State<_SelidikiContent> {
 
                 SizedBox(height: 20),
 
-                // Footer - Hacker Theme
-                Center(
-                  child: Text(
-                    'OSINT TOOL © 2024 HADI RAMDHANI',
-                    style: TextStyle(
-                      color: Colors.greenAccent.withOpacity(0.6),
-                      fontSize: 12,
-                      fontFamily: 'pixels',
-                      letterSpacing: 1,
+                // Payload Input Card - Hacker Theme
+                Container(
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[900],
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: Colors.greenAccent.withOpacity(0.3),
+                      width: 1,
                     ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.greenAccent.withOpacity(0.1),
+                        blurRadius: 10,
+                        spreadRadius: 2,
+                        offset: Offset(0, 0),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'TEST PAYLOAD',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.greenAccent,
+                          fontFamily: 'pixels',
+                          letterSpacing: 2,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: _payloadController,
+                        maxLines: 3,
+                        cursorColor: Colors.greenAccent,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'monospace',
+                          fontSize: 14,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: 'Enter test payload to check',
+                          hintStyle: TextStyle(
+                            color: Colors.greenAccent.withOpacity(0.5),
+                            fontFamily: 'monospace',
+                          ),
+                          filled: true,
+                          fillColor: Colors.grey[850],
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide.none,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: Colors.greenAccent.withOpacity(0.3),
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: Colors.greenAccent,
+                              width: 2,
+                            ),
+                          ),
+                          prefixIcon: Icon(
+                            Icons.code,
+                            color: Colors.greenAccent.withOpacity(0.8),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
+
                 SizedBox(height: 20),
+
+                // Scan Button - Hacker Theme
+                Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.greenAccent.withOpacity(0.3),
+                        blurRadius: 15,
+                        spreadRadius: 2,
+                        offset: Offset(0, 0),
+                      ),
+                    ],
+                  ),
+                  child: ElevatedButton(
+                    onPressed: provider.isScanning ? null : _scanForXss,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      foregroundColor: Colors.greenAccent,
+                      padding: EdgeInsets.symmetric(vertical: 18),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        side: BorderSide(color: Colors.greenAccent, width: 2),
+                      ),
+                      elevation: 0,
+                    ),
+                    child: provider.isScanning
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.greenAccent,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 12),
+                              Text(
+                                'SCANNING...',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'pixels',
+                                  letterSpacing: 2,
+                                ),
+                              ),
+                            ],
+                          )
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.search,
+                                size: 20,
+                                color: Colors.greenAccent,
+                              ),
+                              SizedBox(width: 8),
+                              Text(
+                                'CHECK TARGET',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'pixels',
+                                  letterSpacing: 2,
+                                ),
+                              ),
+                            ],
+                          ),
+                  ),
+                ),
+
+                SizedBox(height: 20),
+
+                // Result Card - Hacker Theme
+                if (provider.showResult)
+                  Container(
+                    padding: EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[900],
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color:
+                            provider.result.contains('Vulnerability Detected')
+                            ? Colors.redAccent.withOpacity(0.5)
+                            : Colors.greenAccent.withOpacity(0.3),
+                        width: 1,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color:
+                              (provider.result.contains(
+                                        'Vulnerability Detected',
+                                      )
+                                      ? Colors.redAccent
+                                      : Colors.greenAccent)
+                                  .withOpacity(0.1),
+                          blurRadius: 10,
+                          spreadRadius: 2,
+                          offset: Offset(0, 0),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              provider.result.contains('Vulnerability Detected')
+                                  ? Icons.warning
+                                  : Icons.check_circle,
+                              color:
+                                  provider.result.contains(
+                                    'Vulnerability Detected',
+                                  )
+                                  ? Colors.redAccent
+                                  : Colors.greenAccent,
+                              size: 24,
+                            ),
+                            SizedBox(width: 10),
+                            Text(
+                              provider.result.contains('Vulnerability Detected')
+                                  ? 'VULNERABILITY DETECTED'
+                                  : 'TARGET SECURE',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.greenAccent,
+                                fontFamily: 'pixels',
+                                letterSpacing: 2,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                          provider.result,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.white,
+                            height: 1.5,
+                            fontFamily: 'monospace',
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
               ],
             ),
           ),
