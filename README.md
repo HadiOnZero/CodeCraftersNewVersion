@@ -59,7 +59,7 @@
 1. **Clone Repository**
    ```bash
    git clone https://github.com/HadiOnZero/CodeCraftersNewVersion.git
-   cd syborgcate_workshop
+   cd CodeCraftersNewVersion
    ```
 
 2. **Install Dependencies**
@@ -114,7 +114,7 @@ flutter build linux --release
 ## 📁 Struktur Proyek
 
 ```
-syborgcate_workshop/
+CodeCraftersNewVersion/
 ├── lib/
 │   ├── components/          # Reusable UI components
 │   ├── constants/           # App constants and assets
