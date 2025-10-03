@@ -1,4 +1,4 @@
-# 🔐 SyborgCate Workshop
+# 🔐 CodeCrafters
 
 <div align="center">
   
@@ -7,7 +7,7 @@
 ![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.1.0-green.svg)](https://github.com/IndonesianDedsec/syborgcate_workshop)
+[![Version](https://img.shields.io/badge/version-0.1.0-green.svg)](https://github.com/HadiOnZero/CodeCraftersNewVersion)
 
 </div>
 
@@ -58,7 +58,7 @@
 
 1. **Clone Repository**
    ```bash
-   git clone https://github.com/IndonesianDedsec/syborgcate_workshop.git
+   git clone https://github.com/HadiOnZero/CodeCraftersNewVersion.git
    cd syborgcate_workshop
    ```
 
