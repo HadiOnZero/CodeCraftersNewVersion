@@ -134,23 +134,6 @@ class AboutAppPage extends StatelessWidget {
                     '© 2024 Syborg Cate Workshop. All rights reserved.',
                 'https://hadiramdhani.web.app',
               ),
-
-              SizedBox(height: 30),
-
-              // Matrix animation
-              Container(
-                height: 60,
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.greenAccent.withOpacity(0.3),
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(8),
-                  color: Colors.black,
-                ),
-                child: MatrixHorizontal(),
-              ),
             ],
           ),
         ),

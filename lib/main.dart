@@ -17,6 +17,7 @@ import 'package:syborgcate_workshop/providers/haxor_mirror_provider.dart';
 import 'login_page.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
+import 'package:device_info_plus/device_info_plus.dart';
 
 void main() async {
   if (kDebugMode) {
@@ -215,20 +216,37 @@ class _HomePagesState extends State<HomePages> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Terminal-style header
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.greenAccent, width: 1),
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.grey[900],
-                    ),
-                    child: Text(
-                      'SYSTEM READY',
-                      style: TextStyle(
-                        color: Colors.greenAccent,
-                        fontFamily: 'pixels',
-                        fontSize: 14,
-                        letterSpacing: 3,
+                  InkWell(
+                    onTap: () => _showSystemInfoDialog(context),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 10,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.greenAccent, width: 1),
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.grey[900],
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'SYSTEM READY',
+                            style: TextStyle(
+                              color: Colors.greenAccent,
+                              fontFamily: 'pixels',
+                              fontSize: 14,
+                              letterSpacing: 3,
+                            ),
+                          ),
+                          SizedBox(width: 8),
+                          Icon(
+                            Icons.computer,
+                            color: Colors.greenAccent.withOpacity(0.7),
+                            size: 16,
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -384,6 +402,206 @@ class _HomePagesState extends State<HomePages> {
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> _showSystemInfoDialog(BuildContext context) async {
+    final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    String systemInfo = '';
+
+    try {
+      if (Platform.isAndroid) {
+        final AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+        systemInfo =
+            '''
+📱 ANDROID DEVICE INFO
+├─ Model: ${androidInfo.model}
+├─ Brand: ${androidInfo.brand}
+├─ Device: ${androidInfo.device}
+├─ Product: ${androidInfo.product}
+├─ Android Version: ${androidInfo.version.release}
+├─ SDK: ${androidInfo.version.sdkInt}
+├─ Board: ${androidInfo.board}
+├─ Hardware: ${androidInfo.hardware}
+└─ Supported ABIs: ${androidInfo.supportedAbis.join(', ')}
+        ''';
+      } else if (Platform.isIOS) {
+        final IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+        systemInfo =
+            '''
+📱 iOS DEVICE INFO
+├─ Model: ${iosInfo.model}
+├─ Name: ${iosInfo.name}
+├─ System Name: ${iosInfo.systemName}
+├─ System Version: ${iosInfo.systemVersion}
+├─ Identifier: ${iosInfo.identifierForVendor}
+└─ Localized Model: ${iosInfo.localizedModel}
+        ''';
+      } else if (Platform.isWindows) {
+        final WindowsDeviceInfo windowsInfo = await deviceInfo.windowsInfo;
+        systemInfo =
+            '''
+💻 WINDOWS SYSTEM INFO
+├─ Computer Name: ${windowsInfo.computerName}
+├─ Number of Cores: ${windowsInfo.numberOfCores}
+├─ System Memory: ${(windowsInfo.systemMemoryInMegabytes / 1024).toStringAsFixed(2)} GB
+└─ Windows Version: ${windowsInfo.productName}
+        ''';
+      } else if (Platform.isMacOS) {
+        final MacOsDeviceInfo macInfo = await deviceInfo.macOsInfo;
+        systemInfo =
+            '''
+🍎 MACOS SYSTEM INFO
+├─ Model: ${macInfo.model}
+├─ Computer Name: ${macInfo.computerName}
+├─ Host Name: ${macInfo.hostName}
+├─ OS Version: ${macInfo.osRelease}
+├─ Number of Cores: ${macInfo.activeCPUs}
+└─ Kernel Version: ${macInfo.kernelVersion}
+        ''';
+      } else if (Platform.isLinux) {
+        final LinuxDeviceInfo linuxInfo = await deviceInfo.linuxInfo;
+        systemInfo =
+            '''
+🐧 LINUX SYSTEM INFO
+├─ Name: ${linuxInfo.name}
+├─ Version: ${linuxInfo.version}
+├─ ID: ${linuxInfo.id}
+├─ ID Like: ${linuxInfo.idLike}
+├─ Version ID: ${linuxInfo.versionId}
+├─ Pretty Name: ${linuxInfo.prettyName}
+├─ Build ID: ${linuxInfo.buildId}
+├─ Variant: ${linuxInfo.variant}
+├─ Variant ID: ${linuxInfo.variantId}
+└─ Machine ID: ${linuxInfo.machineId}
+        ''';
+      } else {
+        systemInfo =
+            '''
+🔧 PLATFORM INFO
+├─ Platform: ${Platform.operatingSystem}
+├─ Version: ${Platform.operatingSystemVersion}
+└─ Number of Processors: ${Platform.numberOfProcessors}
+        ''';
+      }
+    } catch (e) {
+      systemInfo =
+          '''
+❌ ERROR
+├─ Failed to get device info
+└─ Error: $e
+      ''';
+    }
+
+    // Add Flutter and App info
+    systemInfo +=
+        '''
+    
+📋 FLUTTER & APP INFO
+├─ Flutter Version: ${Platform.version}
+├─ Dart Version: ${Platform.version}
+├─ App Version: 1.9.1
+├─ Locale: ${Platform.localeName}
+└─ Number of Processors: ${Platform.numberOfProcessors}
+    ''';
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.grey[900],
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.computer, color: Colors.greenAccent, size: 20),
+              SizedBox(width: 8),
+              Flexible(
+                child: Text(
+                  'SYSTEM INFO',
+                  style: TextStyle(
+                    color: Colors.greenAccent,
+                    fontFamily: 'pixels',
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  systemInfo,
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.9),
+                    fontFamily: 'monospace',
+                    fontSize: 11,
+                    height: 1.4,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+                SizedBox(height: 16),
+                Container(
+                  padding: EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.greenAccent.withOpacity(0.3),
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.black,
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.info_outline,
+                        color: Colors.greenAccent.withOpacity(0.7),
+                        size: 16,
+                      ),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          'System ready for penetration testing and security analysis',
+                          style: TextStyle(
+                            color: Colors.greenAccent.withOpacity(0.8),
+                            fontSize: 10,
+                            fontFamily: 'monospace',
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                'CLOSE',
+                style: TextStyle(
+                  color: Colors.greenAccent,
+                  fontFamily: 'pixels',
+                  letterSpacing: 1,
+                ),
+              ),
+            ),
+          ],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+            side: BorderSide(
+              color: Colors.greenAccent.withOpacity(0.5),
+              width: 1,
+            ),
+          ),
+        );
+      },
     );
   }
 }
