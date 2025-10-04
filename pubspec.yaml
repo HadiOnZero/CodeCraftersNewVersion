@@ -1,7 +1,7 @@
 name: syborgcate_workshop
 description: "A new Flutter project."
 publish_to: 'none'
-version: 0.1.0
+version: 1.9.1
 
 environment:
   sdk: ^3.8.1
@@ -16,6 +16,7 @@ dependencies:
   lottie: ^3.3.1
   http: ^1.5.0
   provider: ^6.1.2
+  url_launcher: ^6.2.5
 
 dev_dependencies:
   flutter_test:

@@ -7,7 +7,7 @@
 ![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.1.0-green.svg)](https://github.com/HadiOnZero/CodeCraftersNewVersion)
+[![Version](https://img.shields.io/badge/version-1.9.1-green.svg)](https://github.com/HadiOnZero/CodeCraftersNewVersion)
 
 </div>
 
