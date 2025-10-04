@@ -13,24 +13,19 @@ class _MatrixHorizontalState extends State<MatrixHorizontal>
   late AnimationController _controller;
   final Random _random = Random();
   final List<String> _attackers = [
-    // Zone-H.org attackers
-    'r0073r', 'Hmei7', 'MisterSpy', 'Kedans-Dz', 'x264', 'Inj3ct0r',
-    'Sn!p3r', 'Dz0ne', 'Dr.S4M007', 'T3rror1st', 'SyRiAn', 'P4r4d0x',
-    'An0nC0d3', 'Cr3w', 'D4rkC0d3r', 'Pr0xy', 'L0g1c', 'V10l3t',
-    'Ph4nt0m', 'Gh0st', 'Sk!d', 'N!ght', 'Sh4d0w', 'C0d3r',
-
-    // Haxor.id attackers
-    'xNot_Found', '404R!p', 'JengkolDotID', 'IndoXploit', 'L0calH0st',
-    'R3v3ng3', 'D3str0y3r', 'Pwn3d', '0wn3d', 'H4x0r', 'Cr4ck3r',
-    'Br34k3r', 'D3v!l', 'S4t4n', 'Luc!f3r', 'D4rkN3t', 'D33pW3b',
-    'An0nym0us', 'G!g4Byt3', 'T3rabyt3', 'P3tabyt3', '3xplo!t',
-    'Vuln3r', 'P4yL04d', 'Sh3ll', 'B4ckd00r', 'R00tk!t',
-
-    // Additional hacker names
-    'M4tr!x', 'N30', 'Tr!n!ty', 'M0rpheus', 'C0mm4nd3r', 'N!0b3',
-    'S3r4ph', 'Ag3nt', 'Sm!th', 'Or4cl3', 'Arch!t3ct', 'M3r0v!ng!4n',
-    'K3r0s', 'B4n3', 'D3us', '3x!l3', 'R3b3l', 'Fr33d0m',
-    'F!ght3r', 'W4rr!0r', 'H4ck3r', 'Cr4ck3r', 'Phr34k', 'Z3r0',
+    'r0073r',
+    'Hmei7',
+    'MisterSpy',
+    'Kedans-Dz',
+    'x264',
+    'xNot_Found',
+    '404R!p',
+    'JengkolDotID',
+    'IndoXploit',
+    'M4tr!x',
+    'N30',
+    'Tr!n!ty',
+    'M0rpheus',
   ];
 
   @override
@@ -51,18 +46,18 @@ class _MatrixHorizontalState extends State<MatrixHorizontal>
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 40, // Fixed height to prevent overflow
+      height: 60, // Fixed safe height
       child: AnimatedBuilder(
         animation: _controller,
         builder: (context, child) {
           return ClipRect(
             child: Stack(
               children: [
-                // Background matrix rain effect
-                _buildMatrixRain(),
-                // Moving attacker names with trail effect
-                _buildAttackerNamesWithTrail(),
-                // Overlay gradient for fade effect
+                // Simple matrix background
+                _buildSimpleMatrix(),
+                // Safe moving text
+                _buildSafeMovingText(),
+                // Fade overlay
                 _buildFadeOverlay(),
               ],
             ),
@@ -72,20 +67,19 @@ class _MatrixHorizontalState extends State<MatrixHorizontal>
     );
   }
 
-  Widget _buildMatrixRain() {
+  Widget _buildSimpleMatrix() {
     return Row(
-      children: List.generate(30, (index) {
+      children: List.generate(10, (index) {
         return Expanded(
           child: Column(
-            children: List.generate(5, (row) {
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: List.generate(3, (row) {
               return Text(
                 String.fromCharCode(_random.nextInt(94) + 33),
                 style: TextStyle(
-                  color: Colors.greenAccent.withValues(
-                    alpha: 0.1 + (_random.nextDouble() * 0.2),
-                  ),
+                  color: Colors.greenAccent.withValues(alpha: 0.2),
                   fontFamily: 'monospace',
-                  fontSize: 8.0 + _random.nextInt(4).toDouble(),
+                  fontSize: 8,
                 ),
               );
             }),
@@ -95,47 +89,41 @@ class _MatrixHorizontalState extends State<MatrixHorizontal>
     );
   }
 
-  Widget _buildAttackerNamesWithTrail() {
+  Widget _buildSafeMovingText() {
     return Positioned(
-      left: -400 + (_controller.value * 800), // Reduced movement range
-      top: 8, // Adjusted position
+      left: -50 + (_controller.value * 100),
+      top: 20,
       child: Row(
-        children: _attackers.take(12).map((attacker) {
-          // Reduced to 12 items
-          return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20), // Reduced padding
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Main attacker name
-                Text(
-                  attacker,
-                  style: TextStyle(
-                    color: Colors.greenAccent.withValues(alpha: 0.9),
-                    fontFamily: 'monospace',
-                    fontSize: 10, // Reduced font size
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1,
-                    shadows: [
-                      Shadow(
-                        color: Colors.greenAccent.withValues(alpha: 0.8),
-                        blurRadius: 4, // Reduced blur
-                        offset: Offset(0, 0),
-                      ),
-                    ],
+        mainAxisSize: MainAxisSize.min,
+        children: _attackers.take(3).map((attacker) {
+          return Container(
+            width: 60,
+            height: 20,
+            margin: EdgeInsets.symmetric(horizontal: 5),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    attacker,
+                    style: TextStyle(
+                      color: Colors.greenAccent.withValues(alpha: 0.9),
+                      fontFamily: 'monospace',
+                      fontSize: 9,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                // Trail effect
-                Text(
-                  attacker.toLowerCase(),
-                  style: TextStyle(
-                    color: Colors.greenAccent.withValues(alpha: 0.3),
-                    fontFamily: 'monospace',
-                    fontSize: 7, // Reduced font size
-                    letterSpacing: 1,
+                  Text(
+                    attacker.toLowerCase(),
+                    style: TextStyle(
+                      color: Colors.greenAccent.withValues(alpha: 0.3),
+                      fontFamily: 'monospace',
+                      fontSize: 6,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         }).toList(),
