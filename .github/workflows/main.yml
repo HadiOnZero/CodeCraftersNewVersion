@@ -1,4 +1,4 @@
-name: Flutter APK Build & Release
+name: Flutter APK & iOS Build & Release
 
 on:
   push:
@@ -14,8 +14,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    name: Build APK
+  build-android:
+    name: Build Android APK
     runs-on: ubuntu-latest
     
     steps:
@@ -60,9 +60,48 @@ jobs:
           name: release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
 
+  build-ios:
+    name: Build iOS
+    runs-on: macos-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.3'
+          channel: 'stable'
+          cache: true
+          
+      - name: Get dependencies
+        run: flutter pub get
+        
+      - name: Run tests
+        run: flutter test
+        continue-on-error: true
+        
+      - name: Build iOS (No Codesign)
+        run: |
+          flutter build ios --release --no-codesign
+          
+      - name: Create IPA Archive
+        run: |
+          cd build/ios/iphoneos
+          mkdir -p Payload
+          cp -r Runner.app Payload/
+          zip -r CodeCraftersNewVersion-ios.ipa Payload/
+          
+      - name: Upload iOS IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-ipa
+          path: build/ios/iphoneos/CodeCraftersNewVersion-ios.ipa
+
   release:
     name: Create Release
-    needs: build
+    needs: [build-android, build-ios]
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
     
@@ -82,10 +121,17 @@ jobs:
           name: release-apk
           path: ./artifacts
           
-      - name: Rename APK files
+      - name: Download iOS IPA
+        uses: actions/download-artifact@v4
+        with:
+          name: ios-ipa
+          path: ./artifacts
+          
+      - name: Rename files
         run: |
           mv ./artifacts/app-debug.apk ./artifacts/CodeCraftersNewVersion-debug-${{ github.ref_name }}.apk
           mv ./artifacts/app-release.apk ./artifacts/CodeCraftersNewVersion-release-${{ github.ref_name }}.apk
+          mv ./artifacts/CodeCraftersNewVersion-ios.ipa ./artifacts/CodeCraftersNewVersion-ios-${{ github.ref_name }}.ipa
           
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
@@ -93,6 +139,7 @@ jobs:
           files: |
             ./artifacts/CodeCraftersNewVersion-debug-${{ github.ref_name }}.apk
             ./artifacts/CodeCraftersNewVersion-release-${{ github.ref_name }}.apk
+            ./artifacts/CodeCraftersNewVersion-ios-${{ github.ref_name }}.ipa
           draft: false
           prerelease: false
           generate_release_notes: true
