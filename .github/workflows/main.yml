@@ -13,6 +13,9 @@ on:
       - master
   workflow_dispatch:
 
+env:
+  FLUTTER_VERSION: '3.35.5'
+
 jobs:
   build-android:
     name: Build Android APK
@@ -31,13 +34,16 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.35.5'
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: 'stable'
           cache: true
           
       - name: Disable Flutter Analytics
         run: flutter config --no-analytics
-          
+        
+      - name: Flutter Doctor
+        run: flutter doctor -v
+        
       - name: Get dependencies
         run: flutter pub get
         
@@ -74,10 +80,16 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.3'
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: 'stable'
           cache: true
           
+      - name: Disable Flutter Analytics
+        run: flutter config --no-analytics
+        
+      - name: Flutter Doctor
+        run: flutter doctor -v
+        
       - name: Get dependencies
         run: flutter pub get
         
