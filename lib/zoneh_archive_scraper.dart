@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:syborgcate_workshop/providers/zoneh_archive_provider.dart';
-import 'package:syborgcate_workshop/constants/assets.dart';
 import 'package:syborgcate_workshop/components/matrix_animation.dart';
 
 class ZoneHArchiveScraper extends StatelessWidget {
