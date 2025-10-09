@@ -130,9 +130,9 @@ class AboutAppPage extends StatelessWidget {
                 'DEVELOPER',
                 'Developed by: Syborg Cate\n'
                     'Email: syborgcate@example.com\n'
-                    'Website: hadiramdhani.web.app\n'
+                    'Website: hadiramdhanii.web.app\n'
                     '© 2024 Syborg Cate Workshop. All rights reserved.',
-                'https://hadiramdhani.web.app',
+                'https://hadiramdhanii.web.app',
               ),
             ],
           ),

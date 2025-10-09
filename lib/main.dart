@@ -14,6 +14,7 @@ import 'package:syborgcate_workshop/providers/smb_provider.dart';
 import 'package:syborgcate_workshop/providers/selidiki_provider.dart';
 import 'package:syborgcate_workshop/providers/mass_mirror_provider.dart';
 import 'package:syborgcate_workshop/providers/haxor_mirror_provider.dart';
+import 'package:syborgcate_workshop/providers/zoneh_archive_provider.dart';
 import 'login_page.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
@@ -82,6 +83,7 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SelidikiProvider()),
         ChangeNotifierProvider(create: (_) => MassMirrorProvider()),
         ChangeNotifierProvider(create: (_) => HaxorMirrorProvider()),
+        ChangeNotifierProvider(create: (_) => ZoneHArchiveProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -510,11 +512,12 @@ class _HomePagesState extends State<HomePages> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.grey[900],
+          titlePadding: EdgeInsets.fromLTRB(16, 16, 16, 8),
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.computer, color: Colors.greenAccent, size: 20),
-              SizedBox(width: 8),
+              Icon(Icons.computer, color: Colors.greenAccent, size: 18),
+              SizedBox(width: 6),
               Flexible(
                 child: Text(
                   'SYSTEM INFO',
@@ -522,73 +525,83 @@ class _HomePagesState extends State<HomePages> {
                     color: Colors.greenAccent,
                     fontFamily: 'pixels',
                     fontWeight: FontWeight.bold,
-                    letterSpacing: 1,
-                    fontSize: 16,
+                    letterSpacing: 0.5,
+                    fontSize: 14,
                   ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
           ),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  systemInfo,
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.9),
-                    fontFamily: 'monospace',
-                    fontSize: 11,
-                    height: 1.4,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-                SizedBox(height: 16),
-                Container(
-                  padding: EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.greenAccent.withOpacity(0.3),
-                      width: 1,
+          contentPadding: EdgeInsets.fromLTRB(16, 8, 16, 16),
+          content: Container(
+            width: MediaQuery.of(context).size.width * 0.75,
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height * 0.7,
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    systemInfo,
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.9),
+                      fontFamily: 'monospace',
+                      fontSize: 9,
+                      height: 1.2,
+                      letterSpacing: 0.3,
                     ),
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.black,
                   ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.info_outline,
-                        color: Colors.greenAccent.withOpacity(0.7),
-                        size: 16,
+                  SizedBox(height: 12),
+                  Container(
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.greenAccent.withOpacity(0.3),
+                        width: 1,
                       ),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          'System ready for penetration testing and security analysis',
-                          style: TextStyle(
-                            color: Colors.greenAccent.withOpacity(0.8),
-                            fontSize: 10,
-                            fontFamily: 'monospace',
-                            fontStyle: FontStyle.italic,
+                      borderRadius: BorderRadius.circular(6),
+                      color: Colors.black,
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.info_outline,
+                          color: Colors.greenAccent.withOpacity(0.7),
+                          size: 14,
+                        ),
+                        SizedBox(width: 6),
+                        Expanded(
+                          child: Text(
+                            'System ready for penetration testing',
+                            style: TextStyle(
+                              color: Colors.greenAccent.withOpacity(0.8),
+                              fontSize: 8,
+                              fontFamily: 'monospace',
+                              fontStyle: FontStyle.italic,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
+          actionsPadding: EdgeInsets.fromLTRB(16, 8, 16, 16),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
               child: Text(
-                'CLOSE',
+                'OK',
                 style: TextStyle(
                   color: Colors.greenAccent,
                   fontFamily: 'pixels',
-                  letterSpacing: 1,
+                  letterSpacing: 0.5,
+                  fontSize: 11,
                 ),
               ),
             ),

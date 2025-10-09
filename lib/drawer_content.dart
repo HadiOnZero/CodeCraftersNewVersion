@@ -4,6 +4,7 @@ import 'package:syborgcate_workshop/components/button_custom.dart';
 import 'package:syborgcate_workshop/constants/assets.dart';
 import 'package:syborgcate_workshop/mass_mirror_zone-h.dart';
 import 'package:syborgcate_workshop/mass_mirror_haxorid.dart';
+import 'package:syborgcate_workshop/zoneh_archive_scraper.dart';
 import 'package:syborgcate_workshop/selidiki_id.dart';
 import 'package:syborgcate_workshop/smb_enum_nmap.dart';
 import 'package:syborgcate_workshop/vuln_sql_injection_check.dart';
@@ -229,6 +230,13 @@ class DrawerContent extends StatelessWidget {
             SizedBox(height: 6),
             _buildMenuItem(
               context,
+              'ZONE-H ARCHIVE SCRAPER',
+              ZoneHArchiveScraper(),
+              Icons.archive,
+            ),
+            SizedBox(height: 6),
+            _buildMenuItem(
+              context,
               'ABOUT APP',
               AboutAppPage(),
               Icons.info_outline,
@@ -371,6 +379,12 @@ class DrawerContent extends StatelessWidget {
                   'MASS MIRROR HAXOR.ID',
                   'Melakukan mass mirror pada website haxor.id untuk dokumentasi deface.',
                   Icons.track_changes,
+                ),
+                SizedBox(height: 12),
+                _buildToolInfoItem(
+                  'ZONE-H ARCHIVE SCRAPER',
+                  'Mengumpulkan data defacement dari Zone-H archive untuk analisis keamanan.',
+                  Icons.archive,
                 ),
                 SizedBox(height: 16),
                 Container(

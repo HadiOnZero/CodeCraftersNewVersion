@@ -143,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SizedBox(height: 30),
-                  Lottie.asset(Assets.assetsLogin, width: 200, height: 200),
+                  Lottie.asset('assets/logo.json', width: 200, height: 200),
                   Text(
                     'SYSTEM LOGIN',
                     style: TextStyle(
